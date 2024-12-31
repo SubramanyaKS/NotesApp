@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/models/note_data.dart';
 import 'package:provider/provider.dart';
+import 'package:notesapp/screen/homescreen.dart';
 
 class ViewNoteScreen extends StatefulWidget {
   final Note note;
@@ -36,7 +37,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                     });
                   }
                 },
-                icon: Icon(Icons.edit_square),
+                icon: const Icon(Icons.edit_sharp,color: Colors.orange,),
               ),
             ],
             title: Text("Notes App"),
@@ -89,9 +90,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                 return AlertDialog(
                   title: const Text("Edited changes in note as been saved"),
                   actions: [
-                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    );}, child: Text("OK"))
+                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.pop(context);}, child: Text("OK"))
                   ],
                 );
               }

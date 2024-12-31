@@ -25,12 +25,14 @@ class NoteCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(note.title,style: const TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 8,),
+                  Text(note.title,style: const TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.deepPurpleAccent),),
+                  const SizedBox(height: 10,),
                   Text(note.body,
                     style: const TextStyle(fontSize: 18),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,),
+                  const SizedBox(height: 10,),
+                  Text("Created on: ${note.created.toString().substring(0,10)}")
                 ],
               ),
             ),
@@ -55,6 +57,6 @@ class NoteCard extends StatelessWidget {
           ],
         ),
       ),
-    );;
+    );
   }
 }

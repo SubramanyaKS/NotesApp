@@ -10,7 +10,9 @@ class Note {
   String title;
   @HiveField(2)
   String body;
+  @HiveField(3)
+  DateTime created;
 
-  Note({required this.id,required this.title,required this.body});
+  Note({required this.id,required this.title,required this.body,required this.created});
 
 }

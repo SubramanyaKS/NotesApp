@@ -21,7 +21,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     return Consumer<NoteData>(builder: (context,value,child)=>
         Scaffold(
           appBar: AppBar(
-            title: Text("Notes App"),
+            title: Text("Create Notes"),
           ),
           body: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -62,15 +62,13 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
               if(bodyController.text.isEmpty){
                 return;
               }
-              final note = Note(id: value.getAllNotes().length<=0?0:value.getAllNotes().length+1, title: titleController.text, body: bodyController.text);
+              final note = Note(id: value.getAllNotes().length<=0?0:value.getAllNotes().length+1, title: titleController.text, body: bodyController.text,created:DateTime.now());
               value.addNote(note);
               showDialog(context: context, builder: (context){
                 return AlertDialog(
                   title: const Text("Note as been saved"),
                   actions: [
-                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    );}, child: Text("OK"))
+                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.pop(context);}, child: Text("OK"))
                   ],
                 );
               }

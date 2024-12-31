@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                Center(child: Text("All Notes",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)),
+                Center(child: Text("All Notes",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.orange),)),
               Expanded(
                 child: ListView.builder(itemCount: value.getAllNotes().length,
                   itemBuilder: (context,index){
