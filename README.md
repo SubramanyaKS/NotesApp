@@ -53,11 +53,13 @@ flutter run
 
 ### `Note` Model
 
-| Field  | Type   | Description                  |
-|--------|--------|------------------------------|
-| id     | int    | Unique index for each note   |
-| title  | String | Title of the note            |
-| body   | String | Content of the note          |
+| Field    | Type   | Description                  |
+|----------|--------|------------------------------|
+| id       | int    | Unique index for each note   |
+| title    | String | Title of the note            |
+| body     | String | Content of the note          |
+| priority | String | priority of the note         |
+| created  | Date   | created date of the note     |
 
 ## Screenshots
 
