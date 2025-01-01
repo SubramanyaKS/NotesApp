@@ -17,10 +17,11 @@ class NoteData extends ChangeNotifier {
     notifyListeners();
 
   }
-  void updateNote(int index, String title, String body) {
+  void updateNote(int index, String title, String body,String priority) {
     Note updatedNote = _noteBox.getAt(index)!;
     updatedNote.title = title;
     updatedNote.body = body;
+    updatedNote.priority=priority;
     _noteBox.putAt(index, updatedNote);
     // allnotes[index].title = title;
     // allnotes[index].body = body;

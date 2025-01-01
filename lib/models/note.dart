@@ -12,7 +12,9 @@ class Note {
   String body;
   @HiveField(3)
   DateTime created;
+  @HiveField(4)
+  String priority;
 
-  Note({required this.id,required this.title,required this.body,required this.created});
+  Note({required this.id,required this.title,required this.body,required this.created, required this.priority});
 
 }

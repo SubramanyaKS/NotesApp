@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/main.dart';
 import 'package:notesapp/models/note_data.dart';
+import 'package:notesapp/models/priority.dart';
 import 'package:notesapp/screen/homescreen.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +13,18 @@ class NoteCard extends StatelessWidget {
   final Note note;
   final int index;
 
+
   @override
   Widget build(BuildContext context) {
+    Color c = Colors.green;
+    print("Note"+note.priority);
+    if(note.priority==Priority.high.name){
+      c=Colors.red;
+    }
+    if(note.priority==Priority.medium.name){
+      c=Colors.yellow;
+    }
+
     return Card(
       color: Colors.orange[100],
       child: Padding(
@@ -52,8 +63,8 @@ class NoteCard extends StatelessWidget {
                 }
                 );
               },
-            )
-
+            ),
+            Icon(Icons.circle_rounded,color: c,),
           ],
         ),
       ),
