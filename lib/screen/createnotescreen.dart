@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/models/note_data.dart';
 import 'package:notesapp/models/priority.dart';
-import 'package:notesapp/screen/homescreen.dart';
 import 'package:provider/provider.dart';
 
 class CreateNoteScreen extends StatefulWidget {
@@ -23,7 +22,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     return Consumer<NoteData>(builder: (context,value,child)=>
         Scaffold(
           appBar: AppBar(
-            title: Text("Create Notes"),
+            title: const Text("Create Notes"),
           ),
           body: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -39,15 +38,15 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                     hintText: "Title",
                   ),
                 ),
-                SizedBox(height: 18,),
-                Text("Priority:",style: TextStyle(fontSize: 18),),
+                const SizedBox(height: 18,),
+                const Text("Priority:",style: TextStyle(fontSize: 18),),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Expanded(
                       child: ListTile(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         contentPadding: EdgeInsets.zero,
                         // dense: true,
                         title: const Text('Low',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold),),
@@ -65,7 +64,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                     ),
                     Expanded(
                       child: ListTile(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         contentPadding: EdgeInsets.zero,
                         title: const Text('Medium',style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold),),
                         leading: Radio<Priority>(
@@ -82,7 +81,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                     ),
                     Expanded(
                       child: ListTile(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         contentPadding: EdgeInsets.zero,
                         title: const Text('High',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
                         leading: Radio<Priority>(
@@ -99,7 +98,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 18,),
+                const SizedBox(height: 18,),
                 TextFormField(
                   maxLines: 18,
                   controller: bodyController,
@@ -124,14 +123,13 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
               if(bodyController.text.isEmpty){
                 return;
               }
-              print(_priority?.name);
-              final note = Note(id: value.getAllNotes().length<=0?0:value.getAllNotes().length+1, title: titleController.text, body: bodyController.text,created:DateTime.now(),priority: _priority!.name);
+              final note = Note(id: value.allNotes.isEmpty?0:value.allNotes.length+1, title: titleController.text, body: bodyController.text,created:DateTime.now(),priority: _priority!.name);
               value.addNote(note);
               showDialog(context: context, builder: (context){
                 return AlertDialog(
                   title: const Text("Note as been saved"),
                   actions: [
-                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.pop(context);}, child: Text("OK"))
+                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.pop(context);}, child: const Text("OK"))
                   ],
                 );
               }

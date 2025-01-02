@@ -4,33 +4,47 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class NoteData extends ChangeNotifier {
   final Box<Note> _noteBox = Hive.box<Note>('notes');
-  // List <Note> allnotes = List.empty(growable: true);
+  List<Note> _filteredNotes = [];
 
-  List<Note> getAllNotes(){
-    return _noteBox.values.toList();
-    // return allnotes;
-  }
+  List<Note> get allNotes => _noteBox.values.toList();
+  List<Note> get filteredNotes => _filteredNotes.isEmpty ? allNotes : _filteredNotes;
 
-  void addNote(Note note){
-    _noteBox.add(note);
-    // allnotes.add(note);
+  void searchNotes(String query) {
+    if (query.isEmpty) {
+      _filteredNotes = [];
+    } else {
+      _filteredNotes = allNotes
+          .where((note) => note.title.toLowerCase().contains(query.toLowerCase()) ||
+          note.body.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
     notifyListeners();
-
   }
-  void updateNote(int index, String title, String body,String priority) {
+
+  void addNote(Note note) {
+    _noteBox.add(note);
+    notifyListeners();
+  }
+
+  void updateNote(int index, String title, String body, String priority) {
     Note updatedNote = _noteBox.getAt(index)!;
     updatedNote.title = title;
     updatedNote.body = body;
-    updatedNote.priority=priority;
+    updatedNote.priority = priority;
     _noteBox.putAt(index, updatedNote);
-    // allnotes[index].title = title;
-    // allnotes[index].body = body;
-    notifyListeners();
-  }
-  void removeNote(int index){
-    _noteBox.deleteAt(index);
-    // allnotes.remove(note);
     notifyListeners();
   }
 
+  void removeNoteAt(int index) {
+    _noteBox.deleteAt(index);
+    notifyListeners();
+  }
+
+  void removeNote(Note note) {
+    final index = _noteBox.values.toList().indexOf(note);
+    if (index != -1) {
+      _noteBox.deleteAt(index);
+      notifyListeners();
+    }
+  }
 }

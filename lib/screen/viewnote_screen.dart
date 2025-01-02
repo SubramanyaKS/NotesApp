@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/models/note_data.dart';
 import 'package:provider/provider.dart';
-import 'package:notesapp/screen/homescreen.dart';
 
 import '../models/priority.dart';
 
 class ViewNoteScreen extends StatefulWidget {
   final Note note;
-  final int,index;
-  const ViewNoteScreen({super.key, required this.note, this.int, this.index});
+  final dynamic index;
+  const ViewNoteScreen({super.key, required this.note, this.index});
 
   @override
   State<ViewNoteScreen> createState() => _ViewNoteScreenState();
@@ -49,7 +48,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                 icon: const Icon(Icons.edit_sharp,color: Colors.orange,),
               ),
             ],
-            title: Text("Notes App"),
+            title: const Text("Notes App"),
           ),
           body: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -67,15 +66,15 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                     hintText: "Title",
                   ),
                 ),
-                SizedBox(height: 18,),
-                Text("Priority:",style: TextStyle(fontSize: 18),),
+                const SizedBox(height: 18,),
+                const Text("Priority:",style: TextStyle(fontSize: 18),),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Expanded(
                       child: ListTile(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         contentPadding: EdgeInsets.zero,
                         // dense: true,
                         title: const Text('Low',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold),),
@@ -86,7 +85,6 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                           onChanged: (Priority? value) {
                             setState(() {
                               _priority = value;
-                              print(_priority);
                             });
                           },
                         ),
@@ -94,7 +92,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                     ),
                     Expanded(
                       child: ListTile(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         contentPadding: EdgeInsets.zero,
                         title: const Text('Medium',style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold),),
                         leading: Radio<Priority>(
@@ -111,7 +109,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                     ),
                     Expanded(
                       child: ListTile(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         contentPadding: EdgeInsets.zero,
                         title: const Text('High',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
                         leading: Radio<Priority>(
@@ -128,7 +126,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 18,),
+                const SizedBox(height: 18,),
                 TextFormField(
                   readOnly: !editable,
                   maxLines: 10,
@@ -155,13 +153,12 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
               if(bodyController.text.isEmpty){
                 return;
               }
-              print("pp"+_priority!.name);
               value.updateNote(widget.index,titleController.text, bodyController.text,_priority!.name);
               showDialog(context: context, builder: (context){
                 return AlertDialog(
                   title: const Text("Edited changes in note as been saved"),
                   actions: [
-                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.pop(context);}, child: Text("OK"))
+                    TextButton(onPressed: (){Navigator.of(context).pop();Navigator.pop(context);}, child: const Text("OK"))
                   ],
                 );
               }

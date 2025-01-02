@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/main.dart';
 import 'package:notesapp/models/note_data.dart';
 import 'package:notesapp/models/priority.dart';
-import 'package:notesapp/screen/homescreen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/note.dart';
@@ -17,7 +15,6 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color c = Colors.green;
-    print("Note"+note.priority);
     if(note.priority==Priority.high.name){
       c=Colors.red;
     }
@@ -53,11 +50,11 @@ class NoteCard extends StatelessWidget {
                 //   delete note
                 showDialog(context: context, builder: (context){
                   return AlertDialog(
-                    title: Text("Want to delete this note?"),
+                    title: const Text("Want to delete this note?"),
                     content: Text("This ${note.title} will be deleted and cannot be recovered!Are you sure to delete this?"),
                     actions: [
-                      TextButton(onPressed: (){context.read<NoteData>().removeNote(index);Navigator.of(context).pop();}, child: Text("Delete")),
-                      TextButton(onPressed: (){Navigator.of(context).pop();}, child: Text("Cancle"))
+                      TextButton(onPressed: (){context.read<NoteData>().removeNote(note);Navigator.of(context).pop();}, child: const Text("Delete")),
+                      TextButton(onPressed: (){Navigator.of(context).pop();}, child: const Text("Cancle"))
                     ],
                   );
                 }

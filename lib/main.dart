@@ -4,7 +4,6 @@ import 'package:notesapp/models/note.dart';
 import 'package:notesapp/models/note_data.dart';
 import 'package:notesapp/screen/homescreen.dart';
 import 'package:provider/provider.dart';
-import 'package:hive/hive.dart';
 
 
 void main() async{
