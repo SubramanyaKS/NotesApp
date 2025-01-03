@@ -67,7 +67,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
                   ),
                 ),
                 const SizedBox(height: 18,),
-                const Text("Priority:",style: TextStyle(fontSize: 18),),
+                const Text("Priority:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

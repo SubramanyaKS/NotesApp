@@ -47,4 +47,18 @@ class NoteData extends ChangeNotifier {
       notifyListeners();
     }
   }
+  void sortNotes(String field, bool ascending) {
+    if (field == 'title') {
+      _filteredNotes = allNotes;
+      _filteredNotes.sort((a, b) => ascending
+          ? a.title.compareTo(b.title)
+          : b.title.compareTo(a.title));
+    } else if (field == 'index') {
+      _filteredNotes = allNotes;
+      _filteredNotes.sort((a, b) => ascending
+          ? a.id.compareTo(b.id)
+          : b.id.compareTo(a.id));
+    }
+    notifyListeners();
+  }
 }

@@ -23,6 +23,33 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context,value,child)=>Scaffold(
           backgroundColor: CupertinoColors.systemBackground,
           appBar: AppBar(
+            centerTitle: true,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                PopupMenuButton<String>(
+                  tooltip: 'Sort',
+                  onSelected: (val) {
+                    if (val == 'Title Asc') {
+                      value.sortNotes('title', true);
+                    } else if (val == 'Title Desc') {
+                      value.sortNotes('title', false);
+                    } else if (val == 'Index Asc') {
+                      value.sortNotes('index', true);
+                    } else if (val == 'Index Desc') {
+                      value.sortNotes('index', false);
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(value: 'Title Asc', child: Text('Sort by Title Asc')),
+                    const PopupMenuItem(value: 'Title Desc', child: Text('Sort by Title Desc')),
+                    const PopupMenuItem(value: 'Index Asc', child: Text('Sort by Index Asc')),
+                    const PopupMenuItem(value: 'Index Desc', child: Text('Sort by Index Desc')),
+                  ],
+                ),
+              ),
+            ],
             title: const Text("Notes App"),
             backgroundColor: Colors.orange[100],
           ),
