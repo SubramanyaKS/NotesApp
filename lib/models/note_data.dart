@@ -14,15 +14,20 @@ class NoteData extends ChangeNotifier {
       _filteredNotes = [];
     } else {
       _filteredNotes = allNotes
-          .where((note) => note.title.toLowerCase().contains(query.toLowerCase()) ||
+          .where((note) =>
+      note.title.toLowerCase().contains(query.toLowerCase()) ||
           note.body.toLowerCase().contains(query.toLowerCase()))
           .toList();
+      if(_filteredNotes.isEmpty){
+        _filteredNotes = [];
+      }
     }
     notifyListeners();
   }
 
   void addNote(Note note) {
     _noteBox.add(note);
+    _filteredNotes = allNotes;
     notifyListeners();
   }
 
@@ -32,6 +37,7 @@ class NoteData extends ChangeNotifier {
     updatedNote.body = body;
     updatedNote.priority = priority;
     _noteBox.putAt(index, updatedNote);
+    _filteredNotes = allNotes;
     notifyListeners();
   }
 
@@ -44,21 +50,27 @@ class NoteData extends ChangeNotifier {
     final index = _noteBox.values.toList().indexOf(note);
     if (index != -1) {
       _noteBox.deleteAt(index);
+      _filteredNotes = allNotes;
       notifyListeners();
     }
   }
   void sortNotes(String field, bool ascending) {
-    if (field == 'title') {
-      _filteredNotes = allNotes;
-      _filteredNotes.sort((a, b) => ascending
-          ? a.title.compareTo(b.title)
-          : b.title.compareTo(a.title));
-    } else if (field == 'index') {
-      _filteredNotes = allNotes;
-      _filteredNotes.sort((a, b) => ascending
-          ? a.id.compareTo(b.id)
-          : b.id.compareTo(a.id));
-    }
+    List<Note> notesToSort = filteredNotes.isEmpty ? allNotes : _filteredNotes;
+
+    notesToSort.sort((a, b) {
+      switch (field) {
+        case 'title':
+          return ascending
+              ? a.title.toLowerCase().compareTo(b.title)
+              : b.title.toLowerCase().compareTo(a.title);
+        case 'index':
+          return ascending ? a.id.compareTo(b.id) : b.id.compareTo(a.id);
+        default:
+          return 0;
+      }
+    });
+
+    _filteredNotes = notesToSort; // Ensure sorting is applied
     notifyListeners();
   }
 }
