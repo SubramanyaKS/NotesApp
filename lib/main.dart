@@ -7,10 +7,18 @@ import 'package:provider/provider.dart';
 
 
 void main() async{
-  await Hive.initFlutter();
-  Hive.registerAdapter(NoteAdapter());
-  await Hive.openBox<Note>('notes');
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized(); // Ensures Flutter binding is initialized
+
+  try {
+    await Hive.initFlutter(); // Initialize Hive
+    Hive.registerAdapter(NoteAdapter()); // Register your NoteAdapter
+    await Hive.openBox<Note>('notes'); // Open the Hive box
+  } catch (e) {
+    debugPrint('Hive initialization error: $e');
+  }
+
+  runApp(const MyApp()); // Run the app
+
 }
 
 class MyApp extends StatelessWidget {
