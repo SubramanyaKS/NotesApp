@@ -63,7 +63,7 @@ flutter run
 
 ## Screenshots
 
-Add some screenshots or GIFs of the app here to showcase its features.
+Application screenshots can be viewed in [Screenshot Section](SCREENSHOT.md)
 
 ## Packages Used
 
