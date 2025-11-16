@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notesapp/models/note_data.dart';
+import 'package:notesapp/provider/note_provider.dart';
 import 'package:notesapp/screen/createnotescreen.dart';
 import 'package:notesapp/screen/viewnote_screen.dart';
 import 'package:notesapp/widgets/note_card.dart';
@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Consumer<NoteData>(
+    return Consumer<NoteProvider>(
         builder: (context,value,child)=>Scaffold(
           backgroundColor: CupertinoColors.systemBackground,
           appBar: AppBar(

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:notesapp/models/note.dart';
-import 'package:notesapp/models/note_data.dart';
+import 'package:notesapp/provider/note_provider.dart';
 import 'package:notesapp/screen/homescreen.dart';
 import 'package:provider/provider.dart';
 
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized(); // Ensures Flutter binding is initialized
+  WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    await Hive.initFlutter(); // Initialize Hive
-    Hive.registerAdapter(NoteAdapter()); // Register your NoteAdapter
-    await Hive.openBox<Note>('notes'); // Open the Hive box
+    await Hive.initFlutter();
+    Hive.registerAdapter(NoteAdapter());
+    await Hive.openBox<Note>('notes');
   } catch (e) {
     debugPrint('Hive initialization error: $e');
   }
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (context)=>NoteData(),
+    return ChangeNotifierProvider(create: (context)=>NoteProvider(),
     builder: (context,child)=>MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Note App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),

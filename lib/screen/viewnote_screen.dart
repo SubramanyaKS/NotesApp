@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
-import 'package:notesapp/models/note_data.dart';
+import 'package:notesapp/provider/note_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../models/priority.dart';
@@ -33,7 +33,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
     titleController.text=widget.note.title;
     bodyController.text=widget.note.body;
 
-    return Consumer<NoteData>(builder: (context,value,child)=>
+    return Consumer<NoteProvider>(builder: (context,value,child)=>
         Scaffold(
           appBar: AppBar(
             actions: [

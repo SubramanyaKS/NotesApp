@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/models/note_data.dart';
+import 'package:notesapp/provider/note_provider.dart';
 import 'package:notesapp/models/priority.dart';
 import 'package:provider/provider.dart';
 
@@ -53,8 +53,8 @@ class NoteCard extends StatelessWidget {
                     title: const Text("Want to delete this note?"),
                     content: Text("This ${note.title} will be deleted and cannot be recovered!Are you sure to delete this?"),
                     actions: [
-                      TextButton(onPressed: (){context.read<NoteData>().removeNote(note);Navigator.of(context).pop();}, child: const Text("Delete")),
-                      TextButton(onPressed: (){Navigator.of(context).pop();}, child: const Text("Cancle"))
+                      TextButton(onPressed: (){context.read<NoteProvider>().removeNote(note);Navigator.of(context).pop();}, child: const Text("Delete")),
+                      TextButton(onPressed: (){Navigator.of(context).pop();}, child: const Text("Cancel"))
                     ],
                   );
                 }

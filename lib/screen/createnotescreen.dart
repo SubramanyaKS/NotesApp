@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
-import 'package:notesapp/models/note_data.dart';
+import 'package:notesapp/provider/note_provider.dart';
 import 'package:notesapp/models/priority.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NoteData>(builder: (context,value,child)=>
+    return Consumer<NoteProvider>(builder: (context,value,child)=>
         Scaffold(
           appBar: AppBar(
             title: const Text("Create Notes"),
