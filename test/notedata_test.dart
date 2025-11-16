@@ -12,7 +12,7 @@ class MockHive extends Mock {
 
 void main() {
   late MockBox<Note> mockBox;
-  late NoteData noteData;
+  late NoteProvider noteData;
   // Hive.initFlutter();
 
 
@@ -25,7 +25,7 @@ void main() {
     mockBox = MockBox<Note>();
     when(Hive.box<Note>('notes')).thenReturn(mockBox);
 
-    noteData = NoteData(); // This uses the internal Hive.box call.
+    noteData = NoteProvider(); // This uses the internal Hive.box call.
   });
 
   test('Add a note', () {

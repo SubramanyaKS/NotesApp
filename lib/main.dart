@@ -17,14 +17,13 @@ void main() async{
     debugPrint('Hive initialization error: $e');
   }
 
-  runApp(const MyApp()); // Run the app
+  runApp(const MyApp());
 
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(create: (context)=>NoteProvider(),
@@ -36,7 +35,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomeScreen(),
-    ),);
+    ),
+    );
   }
 }
 
