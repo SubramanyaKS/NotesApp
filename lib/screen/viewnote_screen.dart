@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/provider/note_provider.dart';
 import 'package:notesapp/utils/utils.dart';
+import 'package:notesapp/widgets/custom_toast.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/priority.dart';
@@ -32,8 +33,6 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -167,20 +166,18 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
       _priority!.name,
     );
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Edited changes in note have been saved"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.pop(context);
-            },
-            child: const Text("OK"),
-          ),
-        ],
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: CustomToast(
+          message: "Changes has been saved",
+          color: Colors.green,
+          icons: Icons.check,
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
     );
+    Navigator.pop(context);
   }
 }

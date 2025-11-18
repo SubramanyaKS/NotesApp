@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/provider/note_provider.dart';
 import 'package:notesapp/utils/priority.dart';
+import 'package:notesapp/widgets/custom_toast.dart';
 import 'package:provider/provider.dart';
 
 class CreateNoteScreen extends StatefulWidget {
@@ -32,9 +33,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                 border: InputBorder.none,
               ),
             ),
-
             const SizedBox(height: 16),
-
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -42,7 +41,6 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-
             RadioGroup<Priority>(
               groupValue: _priority,
               onChanged: (value) {
@@ -89,9 +87,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                 ],
               ),
             ),
-
             const SizedBox(height: 16),
-
             Expanded(
               child: TextFormField(
                 controller: bodyController,
@@ -121,7 +117,16 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
         bodyController.text.isEmpty ||
         _priority == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please complete all fields")),
+        const SnackBar(
+          content: CustomToast(
+            message: "Please complete all fields",
+            color: Colors.red,
+            icons: Icons.warning,
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
       );
       return;
     }
@@ -137,21 +142,18 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     );
 
     provider.addNote(note);
-
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text("Note saved"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text("OK"),
-          ),
-        ],
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: CustomToast(
+          message: "Note Saved",
+          color: Colors.green,
+          icons: Icons.check,
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
     );
+    Navigator.pop(context);
   }
 }
