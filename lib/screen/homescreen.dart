@@ -17,6 +17,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // List<Note> displayNotes;
   final searchController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
+  bool searchFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    searchFocusNode.addListener(() {
+      setState(() => searchFocused = searchFocusNode.hasFocus);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              const SizedBox(height:20),
+              const SizedBox(height: 20),
               const Center(
                 child: Text(
                   "Notes App",
@@ -36,17 +47,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.orange),
                 ),
               ),
-              const SizedBox(height:20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
                     child: Consumer<NoteProvider>(
-                      builder: (_, value, __) => SearchBar(
-                        leading: const Icon(Icons.search),
-                        controller: searchController,
-                        backgroundColor: const WidgetStatePropertyAll(Colors.white),
-                        hintText: 'Search Notes',
-                        onChanged: value.searchNotes,
+                      builder: (_, value, __) => AnimatedContainer(
+                        duration: Duration(milliseconds: 250),
+                        curve: Curves.easeOut,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: searchFocused ? 4 : 0),
+                        child: SearchBar(
+                          focusNode: searchFocusNode,
+                          leading: const Icon(Icons.search),
+                          controller: searchController,
+                          backgroundColor:
+                              const WidgetStatePropertyAll(Colors.white),
+                          hintText: 'Search Notes',
+                          onChanged: value.searchNotes,
+                        ),
                       ),
                     ),
                   ),
@@ -57,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       tooltip: 'Sort',
                       onSelected: (val) {
                         final provider = context.read<NoteProvider>();
-        
+
                         if (val == 'Title Asc') {
                           provider.sortNotes('title', true);
                         } else if (val == 'Title Desc') {
@@ -83,26 +102,52 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 18),
               Expanded(
                 child: Consumer<NoteProvider>(
-                  builder: (_, value, __) => ListView.builder(
-                    itemCount: value.filteredNotes.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ViewNoteScreen(
-                              note: value.filteredNotes[index],
-                              index: index,
+                  builder: (_, value, __) => value.filteredNotes.isEmpty
+                      ? const Center(
+                          child: AnimatedOpacity(
+                            opacity: 1,
+                            duration: Duration(milliseconds: 500),
+                            child: Text(
+                              "No Notes Found",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey),
                             ),
                           ),
-                        ),
-                        child: NoteCard(
-                          note: value.filteredNotes[index],
-                          index: index,
-                        ),
-                      );
-                    },
-                  ),
+                        )
+                      : ListView.builder(
+                          itemCount: value.filteredNotes.length,
+                          itemBuilder: (context, index) {
+                            return TweenAnimationBuilder(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration:
+                                  Duration(milliseconds: 400 + (index * 70)),
+                              builder: (context, value, child) {
+                                return Opacity(
+                                  opacity: value,
+                                  child: Transform.translate(
+                                    offset:
+                                        Offset(0, 20 * (1 - value)), // slide up
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: GestureDetector(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ViewNoteScreen(
+                                      note: value.filteredNotes[index],
+                                      index: index,
+                                    ),
+                                  ),
+                                ),
+                                child: NoteCard(
+                                  note: value.filteredNotes[index],
+                                  index: index,
+                                ),
+                              ),
+                            );
+                          }),
                 ),
               ),
             ],
@@ -117,7 +162,21 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const CreateNoteScreen()),
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 350),
+              pageBuilder: (_, animation, __) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(0, 0.1),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: const CreateNoteScreen(),
+                  ),
+                );
+              },
+            ),
           );
         },
         shape: const CircleBorder(),
@@ -126,5 +185,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  
 }
