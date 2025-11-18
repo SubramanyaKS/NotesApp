@@ -40,7 +40,6 @@ class NoteCard extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.delete,color: Colors.red,size: 40),
               onPressed: () {
-                //   delete note
                 showDialog(context: context, builder: (context){
                   return AlertDialog(
                     title: const Text("Want to delete this note?"),

@@ -13,7 +13,7 @@ class CustomToast extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
         children: [

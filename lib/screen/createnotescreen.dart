@@ -112,7 +112,6 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
   }
 
   void _saveNote(BuildContext context) {
-    // Simple validation
     if (titleController.text.isEmpty ||
         bodyController.text.isEmpty ||
         _priority == null) {

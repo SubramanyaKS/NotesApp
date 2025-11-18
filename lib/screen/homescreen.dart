@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   opacity: value,
                                   child: Transform.translate(
                                     offset:
-                                        Offset(0, 20 * (1 - value)), // slide up
+                                        Offset(0, 20 * (1 - value)),
                                     child: child,
                                   ),
                                 );

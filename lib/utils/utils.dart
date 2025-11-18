@@ -16,7 +16,7 @@ Priority? priorityFromString(String priorityString) {
   try {
     return Priority.values.byName(priorityString);
   } catch (e) {
-    return null; // Handle invalid strings gracefully
+    return null;
   }
 }
 

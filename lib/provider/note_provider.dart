@@ -70,7 +70,7 @@ class NoteProvider extends ChangeNotifier {
       }
     });
 
-    _filteredNotes = notesToSort; // Ensure sorting is applied
+    _filteredNotes = notesToSort;
     notifyListeners();
   }
 }

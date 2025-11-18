@@ -15,8 +15,6 @@ void main() {
   late NoteProvider noteData;
   // Hive.initFlutter();
 
-
-
   setUp(() async{
     await Hive.initFlutter();
     Hive.registerAdapter(NoteAdapter());
@@ -25,7 +23,7 @@ void main() {
     mockBox = MockBox<Note>();
     when(Hive.box<Note>('notes')).thenReturn(mockBox);
 
-    noteData = NoteProvider(); // This uses the internal Hive.box call.
+    noteData = NoteProvider();
   });
 
   test('Add a note', () {

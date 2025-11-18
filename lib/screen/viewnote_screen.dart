@@ -25,7 +25,6 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize _priority once during widget initialization
     titleController.text = widget.note.title;
     bodyController.text = widget.note.body;
     _priority = priorityFromString(widget.note.priority);
