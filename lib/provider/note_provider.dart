@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class NoteData extends ChangeNotifier {
+class NoteProvider extends ChangeNotifier {
   final Box<Note> _noteBox = Hive.box<Note>('notes');
   List<Note> _filteredNotes = [];
 
@@ -70,7 +70,7 @@ class NoteData extends ChangeNotifier {
       }
     });
 
-    _filteredNotes = notesToSort; // Ensure sorting is applied
+    _filteredNotes = notesToSort;
     notifyListeners();
   }
 }
