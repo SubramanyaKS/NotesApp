@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: Consumer<NoteProvider>(
                       builder: (_, value, __) => AnimatedContainer(
-                        duration: Duration(milliseconds: 250),
+                        duration: const Duration(milliseconds: 250),
                         curve: Curves.easeOut,
                         padding: EdgeInsets.symmetric(
                             horizontal: searchFocused ? 4 : 0),
@@ -163,13 +163,13 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(
             context,
             PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 350),
+              transitionDuration: const Duration(milliseconds: 350),
               pageBuilder: (_, animation, __) {
                 return FadeTransition(
                   opacity: animation,
                   child: SlideTransition(
                     position: Tween<Offset>(
-                      begin: Offset(0, 0.1),
+                      begin: const Offset(0, 0.1),
                       end: Offset.zero,
                     ).animate(animation),
                     child: const CreateNoteScreen(),
