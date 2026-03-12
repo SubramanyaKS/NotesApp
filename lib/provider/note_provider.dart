@@ -54,6 +54,16 @@ class NoteProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void pinNote(int index){
+    if (index != -1) {
+      Note updateNote = _noteBox.getAt(index)!;
+      updateNote.pinned = !updateNote.pinned;
+
+    }
+      notifyListeners();
+  }
+
   void sortNotes(String field, bool ascending) {
     List<Note> notesToSort = filteredNotes.isEmpty ? allNotes : _filteredNotes;
 

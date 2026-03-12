@@ -16,7 +16,7 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Color c =getPriorityColor(note.priority);
     return Card(
-      color: Colors.orange[100],
+      color: c,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -53,7 +53,7 @@ class NoteCard extends StatelessWidget {
                 );
               },
             ),
-            Icon(Icons.circle_rounded,color: c,),
+            note.pinned?Icon(Icons.push_pin_outlined,color: Colors.blue,):SizedBox(),
           ],
         ),
       ),

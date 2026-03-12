@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/utils/priority.dart';
 
 Color getPriorityColor(priority) {
-  Color color = Colors.green;
+  Color color = Colors.green.shade200;
   if (priority == Priority.high.name) {
-    color = Colors.red;
+    color = Colors.red.shade200;
   }
   if (priority == Priority.medium.name) {
-    color = Colors.yellow;
+    color = Colors.yellow.shade200;
   }
   return color;
 }

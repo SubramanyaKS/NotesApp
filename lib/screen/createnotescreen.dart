@@ -16,6 +16,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
   Priority? _priority = Priority.low;
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
+  bool pinned = false;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +139,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
       body: bodyController.text,
       created: DateTime.now(),
       priority: _priority!.name,
+      pinned: pinned
     );
 
     provider.addNote(note);

@@ -132,6 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               child: GestureDetector(
+                                onLongPress: (){
+                                  value.pinNote(index);
+                                },
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
