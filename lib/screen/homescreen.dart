@@ -125,22 +125,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return Opacity(
                                   opacity: value,
                                   child: Transform.translate(
-                                    offset:
-                                        Offset(0, 20 * (1 - value)),
+                                    offset: Offset(0, 20 * (1 - value)),
                                     child: child,
                                   ),
                                 );
                               },
                               child: GestureDetector(
-                                onLongPress: (){
-                                  value.pinNote(index);
+                                onLongPress: () {
+                                  value.pinNote(value.filteredNotes[index]);
                                 },
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => ViewNoteScreen(
                                       note: value.filteredNotes[index],
-                                      index: index,
                                     ),
                                   ),
                                 ),
@@ -150,8 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             );
-                          }
-                        ),
+                          }),
                 ),
               ),
             ],

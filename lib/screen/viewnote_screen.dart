@@ -9,8 +9,7 @@ import '../utils/priority.dart';
 
 class ViewNoteScreen extends StatefulWidget {
   final Note note;
-  final dynamic index;
-  const ViewNoteScreen({super.key, required this.note, this.index});
+  const ViewNoteScreen({super.key, required this.note});
 
   @override
   State<ViewNoteScreen> createState() => _ViewNoteScreenState();
@@ -158,8 +157,8 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
   void _saveNote(NoteProvider provider) {
     if (titleController.text.isEmpty || bodyController.text.isEmpty) return;
 
-    provider.updateNote(
-      widget.index,
+    provider.updateNoteByNote(
+      widget.note,
       titleController.text,
       bodyController.text,
       _priority!.name,

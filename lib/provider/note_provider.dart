@@ -3,11 +3,26 @@ import 'package:notesapp/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class NoteProvider extends ChangeNotifier {
-  final Box<Note> _noteBox = Hive.box<Note>('notes');
+  Box<Note>? _noteBox;
   List<Note> _filteredNotes = [];
 
-  List<Note> get allNotes => _noteBox.values.toList();
-  List<Note> get filteredNotes => _filteredNotes.isEmpty ? allNotes : _filteredNotes;
+  NoteProvider() {
+    if (Hive.isBoxOpen('notes')) {
+      _noteBox = Hive.box<Note>('notes');
+    } else {
+      // Try to open the box if not yet open (e.g. hot reload timing race).
+      Hive.openBox<Note>('notes').then((box) {
+        _noteBox = box;
+        notifyListeners();
+      }).catchError((error) {
+        debugPrint('Hive box open failed in NoteProvider: $error');
+      });
+    }
+  }
+
+  List<Note> get allNotes => _noteBox?.values.toList() ?? [];
+  List<Note> get filteredNotes =>
+      _filteredNotes.isEmpty ? allNotes : _filteredNotes;
 
   void searchNotes(String query) {
     if (query.isEmpty) {
@@ -15,53 +30,63 @@ class NoteProvider extends ChangeNotifier {
     } else {
       _filteredNotes = allNotes
           .where((note) =>
-      note.title.toLowerCase().contains(query.toLowerCase()) ||
-          note.body.toLowerCase().contains(query.toLowerCase()))
+              note.title.toLowerCase().contains(query.toLowerCase()) ||
+              note.body.toLowerCase().contains(query.toLowerCase()))
           .toList();
-      if(_filteredNotes.isEmpty){
-        _filteredNotes = [];
-      }
     }
     notifyListeners();
   }
 
   void addNote(Note note) {
-    _noteBox.add(note);
+    if (_noteBox == null) return;
+    _noteBox!.add(note);
     _filteredNotes = allNotes;
     notifyListeners();
   }
 
   void updateNote(int index, String title, String body, String priority) {
-    Note updatedNote = _noteBox.getAt(index)!;
-    updatedNote.title = title;
-    updatedNote.body = body;
-    updatedNote.priority = priority;
-    _noteBox.putAt(index, updatedNote);
+    if (_noteBox == null) return;
+    final note = _noteBox!.getAt(index);
+    if (note == null) return;
+    note.title = title;
+    note.body = body;
+    note.priority = priority;
+    note.save();
+    _filteredNotes = allNotes;
+    notifyListeners();
+  }
+
+  void updateNoteByNote(Note note, String title, String body, String priority) {
+    note.title = title;
+    note.body = body;
+    note.priority = priority;
+    note.save();
     _filteredNotes = allNotes;
     notifyListeners();
   }
 
   void removeNoteAt(int index) {
-    _noteBox.deleteAt(index);
+    if (_noteBox == null) return;
+    _noteBox!.deleteAt(index);
+    _filteredNotes = allNotes;
     notifyListeners();
   }
 
   void removeNote(Note note) {
-    final index = _noteBox.values.toList().indexOf(note);
-    if (index != -1) {
-      _noteBox.deleteAt(index);
+    if (_noteBox == null) return;
+    final key = note.key;
+    if (key != null && _noteBox!.containsKey(key)) {
+      _noteBox!.delete(key);
       _filteredNotes = allNotes;
       notifyListeners();
     }
   }
 
-  void pinNote(int index){
-    if (index != -1) {
-      Note updateNote = _noteBox.getAt(index)!;
-      updateNote.pinned = !updateNote.pinned;
-
-    }
-      notifyListeners();
+  void pinNote(Note note) {
+    note.pinned = !note.pinned;
+    note.save();
+    _filteredNotes = allNotes;
+    notifyListeners();
   }
 
   void sortNotes(String field, bool ascending) {
