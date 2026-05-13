@@ -11,8 +11,13 @@ void main() async{
 
   try {
     await Hive.initFlutter();
-    Hive.registerAdapter(NoteAdapter());
-    await Hive.openBox<Note>('notes');
+    if (!Hive.isAdapterRegistered(NoteAdapter().typeId)) {
+      Hive.registerAdapter(NoteAdapter());
+    }
+    if (!Hive.isBoxOpen('notes')) {
+      await Hive.openBox<Note>('notes');
+    }
+    debugPrint('Hive initialized successfully');
   } catch (e) {
     debugPrint('Hive initialization error: $e');
   }
@@ -39,4 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

@@ -21,7 +21,11 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Create Notes")),
+      appBar: AppBar(title: const Text("Create Notes"),actions: [
+        IconButton(onPressed: ()=>{ setState(() {
+          pinned = !pinned;
+        })}, icon: Icon(pinned?Icons.push_pin_sharp:Icons.push_pin_outlined),color: Colors.red,),
+      ],),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(

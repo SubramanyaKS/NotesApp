@@ -3,24 +3,28 @@ import 'package:notesapp/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class NoteProvider extends ChangeNotifier {
-  Box<Note>? _noteBox;
+  late Box<Note> _noteBox = Hive.box<Note>('notes');
   List<Note> _filteredNotes = [];
 
-  NoteProvider() {
-    if (Hive.isBoxOpen('notes')) {
-      _noteBox = Hive.box<Note>('notes');
-    } else {
-      // Try to open the box if not yet open (e.g. hot reload timing race).
-      Hive.openBox<Note>('notes').then((box) {
-        _noteBox = box;
-        notifyListeners();
-      }).catchError((error) {
-        debugPrint('Hive box open failed in NoteProvider: $error');
-      });
-    }
-  }
+  // NoteProvider() {
+    // Since we ensure the box is open in main.dart, we can safely get it here
+    // try {
+    //   _noteBox = Hive.box<Note>('notes');
+    //   debugPrint('NoteProvider initialized successfully');
+    // } catch (e) {
+    //   debugPrint('Error getting Hive box in NoteProvider: $e');
+    //   // Try to open the box if it's not open
+    //   Hive.openBox<Note>('notes').then((box) {
+    //     _noteBox = box;
+    //     debugPrint('NoteProvider box opened successfully');
+    //     notifyListeners();
+    //   }).catchError((error) {
+    //     debugPrint('Failed to open box in NoteProvider: $error');
+    //   });
+    // }
+  // }
 
-  List<Note> get allNotes => _noteBox?.values.toList() ?? [];
+  List<Note> get allNotes => _noteBox.values.toList();
   List<Note> get filteredNotes =>
       _filteredNotes.isEmpty ? allNotes : _filteredNotes;
 
@@ -38,10 +42,11 @@ class NoteProvider extends ChangeNotifier {
   }
 
   void addNote(Note note) {
-    if (_noteBox == null) return;
-    _noteBox!.add(note);
+    debugPrint("Adding note: ${note.title}");
+    _noteBox.add(note);
     _filteredNotes = allNotes;
     notifyListeners();
+    debugPrint("Note added successfully, total notes: ${allNotes.length}");
   }
 
   void updateNote(int index, String title, String body, String priority) {
@@ -66,17 +71,15 @@ class NoteProvider extends ChangeNotifier {
   }
 
   void removeNoteAt(int index) {
-    if (_noteBox == null) return;
-    _noteBox!.deleteAt(index);
+    _noteBox.deleteAt(index);
     _filteredNotes = allNotes;
     notifyListeners();
   }
 
   void removeNote(Note note) {
-    if (_noteBox == null) return;
     final key = note.key;
-    if (key != null && _noteBox!.containsKey(key)) {
-      _noteBox!.delete(key);
+    if (key != null && _noteBox.containsKey(key)) {
+      _noteBox.delete(key);
       _filteredNotes = allNotes;
       notifyListeners();
     }
