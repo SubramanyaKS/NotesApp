@@ -9,6 +9,7 @@ A simple and efficient **Notes App** built with **Flutter** and **Hive** for off
 - Delete notes when no longer needed.
 - Fully offline storage with Hive database.
 - Lightweight and fast.
+- Added pinned note feature.
 
 ## Prerequisites
 
@@ -60,10 +61,21 @@ flutter run
 | body     | String | Content of the note          |
 | priority | String | priority of the note         |
 | created  | Date   | created date of the note     |
+| pinned   | bool   | indication for pinned note   |
 
 ## Screenshots
 
 Application screenshots can be viewed in [Screenshot Section](SCREENSHOT.md)
+
+## Contributing
+
+Feel free to open issues or submit pull requests for bug fixes, new features, or improvements.
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## Packages Used
 

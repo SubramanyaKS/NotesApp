@@ -33,6 +33,7 @@ void main() {
       title: 'Test Note',
       body: 'This is a test',
       priority: 'low', created: DateTime.now(),
+      pinned: false,
     );
 
     when(mockBox.add(note)).thenAnswer((_) async => 0);
@@ -51,6 +52,7 @@ void main() {
       body: 'This is a test',
       priority: 'low',
       created: DateTime.now(),
+      pinned:true,
     );
 
     when(mockBox.values).thenReturn([note]);
@@ -69,6 +71,7 @@ void main() {
       body: 'This is a test',
       priority: 'low',
       created: DateTime.now(),
+      pinned: false,
     );
 
     when(mockBox.getAt(0)).thenReturn(note);
@@ -89,6 +92,7 @@ void main() {
       body: 'This is a test',
       priority: 'low',
       created: DateTime.now(),
+      pinned: false,
     );
     final note2 = Note(
       id: 2,
@@ -96,6 +100,7 @@ void main() {
       body: 'Another test',
       priority: 'high',
       created: DateTime.now(),
+      pinned: true,
     );
 
     when(mockBox.values).thenReturn([note1, note2]);

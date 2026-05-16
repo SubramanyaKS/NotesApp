@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'note.g.dart';
 
 @HiveType(typeId: 0)
-class Note {
+class Note extends HiveObject {
   @HiveField(0)
   int id;
   @HiveField(1)
@@ -14,7 +14,14 @@ class Note {
   DateTime created;
   @HiveField(4)
   String priority;
+  @HiveField(5)
+  bool pinned;
 
-  Note({required this.id,required this.title,required this.body,required this.created, required this.priority});
-
+  Note(
+      {required this.id,
+      required this.title,
+      required this.body,
+      required this.created,
+      required this.priority,
+      required this.pinned});
 }
